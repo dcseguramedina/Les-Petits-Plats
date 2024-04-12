@@ -4,13 +4,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/991beb3e09.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap"
+        rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <title>Les Petits Plats</title>
 </head>
 
 <body>
-    <header></header>
-    <main></main>
+    <header>
+        <img class="relative left-[4.5%] top-[9%]" src="../src/assets/images/Logo.png" alt="logo">
+        <div class="flex flex-col items-center mt-64">
+            <h1 class="text-yellow-300">CHERCHEZ PARMI PLUS DE 1500 RECETTES<br>DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES
+            </h1>
+            <div class="search_input">
+                <input id="search" type="search" name="search" placeholder="Rechercher une recette, un ingrédient, ..." >
+                <img class="w-1/10 h-4/5" src="../src/assets/images/Loop.png" alt="">
+            </div>            
+        </div>
+    </header>
+
+    <main>
+        <section class="flex flex-row justify-between">
+            <div class="select_container">
+                <div class="select_dropdown">
+                    <button id="ingredients_btn" class="dropdown_buttton">
+                        Ingrédients
+                        <span class="arrow">></span>
+                    </button>
+                    <div id="ingredients" class="dropdown_content">
+                        <div class="input_container">
+                            <input id="ingredients_input" class="input" type="text">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="select_dropdown">
+                    <button id="appliance_btn" class="dropdown_buttton">
+                        Appareils
+                        <span class="arrow">></span>
+                    </button>
+                    <div id="appliance" class="dropdown_content">
+                        <div class="input_container">
+                            <input id="appliance_input" class="input" type="text">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="select_dropdown">
+                    <button id="ustensils_btn" class="dropdown_buttton">
+                        Ustensiles
+                        <span class="arrow">></span>
+                    </button>
+                    <div id="ustensils" class="dropdown_content">
+                        <div class="input_container">
+                            <input id="ustensils_input" class="input" type="text">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2>1500 recettes</h2>
+        </section>
+
+        <section class="recipes_section">
+
+        </section>
+    </main>
+
+    <script type="module" src="../src/scripts/models/Recipe.js"></script>
+    <script type="module" src="../src/scripts/pages/index.js"></script>
 </body>
 
 </html>
