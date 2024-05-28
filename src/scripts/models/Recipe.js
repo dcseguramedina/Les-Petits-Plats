@@ -17,14 +17,18 @@ export default class Recipe {
     // Create an "article" tag dedicated to a recipe
     const recipeCard = document.createElement('article')
     recipeCard.className = 'recipe_card'
+    recipeCard.setAttribute('data-id', this.id)
+    recipeCard.setAttribute('data-ingredients', this.ingredients.map((ingredient) => ingredient.ingredient))
+    recipeCard.setAttribute('data-appliance', this.appliance)
+    recipeCard.setAttribute('data-ustensils', this.ustensils)
     recipesSection.appendChild(recipeCard)
-    
+
     // Create an "div" tag for each recipe's image
     const recipeImage = document.createElement('div')
     recipeImage.className = 'recipe_image'
     recipeCard.appendChild(recipeImage)
 
-     // Create an "span" tag for each recipe's time
+    // Create an "span" tag for each recipe's time
     const temps = document.createElement('span')
     temps.className = 'temps'
     temps.textContent = this.time + `min`
@@ -37,7 +41,7 @@ export default class Recipe {
     image.alt = this.name
     recipeImage.appendChild(image)
 
-    // Create an "div" tag for each recipe's idetails
+    // Create an "div" tag for each recipe's details
     const recipeDetails = document.createElement('div')
     recipeDetails.className = 'recipe_details'
     recipeCard.appendChild(recipeDetails)
@@ -78,28 +82,28 @@ export default class Recipe {
     // Create a "div" tag for recipe's ingredients
     const recipeIngredients = document.createElement('div')
     recipeIngredients.className = 'recipe_ingredients'
-    // recipeIngredients.textContent = this.setIngredients()
+
     ingredients.appendChild(recipeIngredients)
 
     let ingredientsList = this.ingredients
 
-      for (let i = 0; i < ingredientsList.length; i++) {
-  
-        // Create a "ul" tag for recipe's ingredients
-        const list = document.createElement('ul')
-        list.className = 'mt-5'
-        recipeIngredients.appendChild(list)
-  
-        // Create a "li" tag for each ingredient
-        const ingredient = document.createElement('li')
-        ingredient.textContent = ingredientsList[i].ingredient
-        list.appendChild(ingredient)
-  
-        // Create a "li" tag for each quantity
-        const quantity = document.createElement('li')
-        quantity.className = 'text-stone-500'
-        quantity.textContent = (ingredientsList[i].quantity ? ingredientsList[i].quantity : "") + (ingredientsList[i].unit ? ingredientsList[i].unit : "")
-        list.appendChild(quantity)
-      }
+    for (let i = 0; i < ingredientsList.length; i++) {
+
+      // Create a "ul" tag for recipe's ingredients
+      const list = document.createElement('ul')
+      list.className = 'mt-5'
+      recipeIngredients.appendChild(list)
+
+      // Create a "li" tag for each ingredient
+      const ingredient = document.createElement('li')
+      ingredient.textContent = ingredientsList[i].ingredient
+      list.appendChild(ingredient)
+
+      // Create a "li" tag for each quantity
+      const quantity = document.createElement('li')
+      quantity.className = 'text-stone-500'
+      quantity.textContent = (ingredientsList[i].quantity ? ingredientsList[i].quantity : "") + ' ' + (ingredientsList[i].unit ? ingredientsList[i].unit : "")
+      list.appendChild(quantity)
+    }
   }
 }

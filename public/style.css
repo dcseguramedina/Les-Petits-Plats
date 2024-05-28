@@ -562,6 +562,10 @@ body {
   --tw-contain-style:  ;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .relative {
   position: relative;
 }
@@ -586,16 +590,16 @@ body {
   margin-top: 1.75rem;
 }
 
+.block {
+  display: block;
+}
+
 .flex {
   display: flex;
 }
 
 .h-4\/5 {
   height: 80%;
-}
-
-.flex-row {
-  flex-direction: row;
 }
 
 .flex-col {
@@ -608,6 +612,14 @@ body {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.lowercase {
+  text-transform: lowercase;
 }
 
 .text-stone-500 {
@@ -674,7 +686,7 @@ li {
 
 .search_input {
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 66%;
@@ -699,11 +711,22 @@ li {
   outline: transparent;
 }
 
+#search:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
 main {
   width: 100%;
   height: auto;
   padding: 20px 80px 20px 80px;
   background-color: lightgrey;
+}
+
+.select_section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .select_container {
@@ -728,6 +751,7 @@ main {
   align-items: center;
   width: 100%;
   height: 35px;
+  margin-right: 10px;
   padding: 8px;
   border-radius: 10px;
   background-color: #ffffff;
@@ -754,7 +778,7 @@ main {
 
 .input_container {
   display: flex;
-  justify-content:left;
+  justify-content: left;
   align-items: center;
   width: 85%;
   height: 30px;
@@ -779,6 +803,10 @@ main {
   outline: transparent;
 }
 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
 /* Dropdown Content (Hidden by Default) */
 
 .dropdown_content {
@@ -786,7 +814,7 @@ main {
   position: absolute;
   background-color: #ffffff;
   width: 100%;
-  height: 315px;
+  height: 300px;
   overflow: hidden;
   z-index: 1;
   border-radius: 0 0 10px 10px;
@@ -818,6 +846,38 @@ main {
   display: block;
 }
 
+.tag_section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.tag {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 35px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #FFD15B;
+  font-family: 'Manrope';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.39px;
+}
+
+.keyword {
+  margin-right: 85px;
+}
+
+.close {
+  padding: 5px;
+}
+
 .recipes_section {
   display: flex;
   flex-direction: row;
@@ -825,7 +885,7 @@ main {
   justify-content: space-between;
   width: 100%;
   min-height: auto;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .recipe_card {
@@ -886,4 +946,16 @@ main {
 .recipe {
   height: 135px;
   overflow: hidden;
+}
+
+.no-results-message {
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: auto;
+  margin-top: 20px;
+  font-family: 'Manrope';
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 16.39px;
+  text-align: center;
 }
