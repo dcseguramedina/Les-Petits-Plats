@@ -1,13 +1,15 @@
-import recipes from '../../data/recipes.js'
-import Recipe from '../models/Recipe.js'
+import {
+  listOfRecipes,
+  listOfRecipeIngredients,
+  listOfRecipeAppliances,
+  listOfRecipeUstensils
+} from '../utils/lists.utils.js';
+import Recipe from '../models/Recipe.js';
+import Search from '../models/Search.js';
 
+// DISPLAY HOME PAGE //
 function displayHomePage() {
-
-  let listOfAllIngredients = []
-  let listOfAllAppliances = []
-  let listOfAllUstensils = []
-
-  recipes.recipes.forEach((item) => {
+  listOfRecipes.forEach((item) => {
     const recipe = new Recipe(
       item.id,
       item.image,
@@ -18,157 +20,206 @@ function displayHomePage() {
       item.description,
       item.appliance,
       item.ustensils
-    )
-    recipe.displayRecipeCard()
-
-    const ingredients = item.ingredients
-    ingredients.forEach((item) => {
-      listOfAllIngredients.push(item.ingredient)
-    })
-
-    listOfAllAppliances.push(item.appliance)
-
-    const ustensils = item.ustensils
-    ustensils.forEach((item) => {
-      listOfAllUstensils.push(item)
-    })
+    );
+    recipe.displayRecipeCard();
   });
-  displaySelectIngredients(listOfAllIngredients)
-  displaySelectAppliances(listOfAllAppliances)
-  displaySelectUstensils(listOfAllUstensils)
-}
+
+  displaySelectOptions(listOfRecipeIngredients, 'ingredients');
+  displaySelectOptions(listOfRecipeAppliances, 'appliance');
+  displaySelectOptions(listOfRecipeUstensils, 'ustensils');
+};
 displayHomePage()
 
-// Display select //
+// Display select options on Home page //
+function displaySelectOptions(listOfOptions, selectId) {
+  const select = document.getElementById(selectId);
+  const listOfUniqueOptions = [...new Set(listOfOptions)];
 
-function displaySelectIngredients(listOfAllIngredients) {
-  const ingredientsSelect = document.getElementById('ingredients')
+  listOfUniqueOptions.forEach((item) => {
+    const option = document.createElement('option');
+    option.className = 'content';
+    option.textContent = item;
+    select.appendChild(option);
+  });
+};
 
-  const listOfIngredients = listOfAllIngredients.filter((item, index) => listOfAllIngredients.indexOf(item) === index)
-  console.log(listOfIngredients)
+// Manage open/close select dropdown //
+const selectDropdown = document.querySelectorAll('.select_dropdown');
 
-  listOfIngredients.forEach((item) => {
-    // Create an "option" tag for each select ingredient option
-    const selectIngredientOption = document.createElement('option')
-    selectIngredientOption.className = 'content'
-    selectIngredientOption.textContent = item
-    ingredientsSelect.appendChild(selectIngredientOption)
-  })
-}
+selectDropdown.forEach((select) => {
+  select.addEventListener('keydown', (event) => {
+    const key = event.key;
 
-function displaySelectAppliances(listOfAllAppliances) {
-  const applianceSelect = document.getElementById('appliance')
+    if (key === "Enter" || key === " ") {
+      event.preventDefault();
+      toggleDropdown(event.target);
+    }
+  });
 
-  const listOfAppliances = listOfAllAppliances.filter((item, index) => listOfAllAppliances.indexOf(item) === index)
-  console.log(listOfAppliances)
+  select.addEventListener('click', (event) => {
+    const select = event.target;
+    toggleDropdown(select);
+  });
+});
 
-  listOfAppliances.forEach((item) => {
-    // Create an "option" tag for each select appliance option
-    const selectApplianceOption = document.createElement('option')
-    selectApplianceOption.className = 'content'
-    selectApplianceOption.textContent = item
-    applianceSelect.appendChild(selectApplianceOption)
-  })
-}
+function toggleDropdown(select) {
+  const selectId = select.id;
+  let dropdownId;
 
-function displaySelectUstensils(listOfAllUstensils) {
-  const ustensilsSelect = document.getElementById('ustensils')
-
-  const listOfUstensils = listOfAllUstensils.filter((item, index) => listOfAllUstensils.indexOf(item) === index)
-  console.log(listOfUstensils)
-
-  listOfUstensils.forEach((item) => {
-    // Create an "option" tag for each select ustensil option
-    const selectUstensilOption = document.createElement('option')
-    selectUstensilOption.className = 'content'
-    selectUstensilOption.textContent = item
-    ustensilsSelect.appendChild(selectUstensilOption)
-  })
-}
-
-// Open select dropdown //
-
-const selectOptionsButton = document.querySelectorAll('.dropdown_buttton')
-console.log(selectOptionsButton)
-selectOptionsButton.forEach((btn) => btn.addEventListener("click", (e) => {
-  console.log(e.target.id)
-  switch (e.target.id) {
+  switch (selectId) {
     case 'ingredients_btn':
-      const dropdownIngredients = document.getElementById('ingredients').classList.toggle('show');
-      break
+      dropdownId = 'ingredients';
+      break;
     case 'appliance_btn':
-      const dropdownAppliance = document.getElementById('appliance').classList.toggle('show');
-      break
+      dropdownId = 'appliance';
+      break;
     case 'ustensils_btn':
-      const dropdownUstensils = document.getElementById('ustensils').classList.toggle('show');
-      break
+      dropdownId = 'ustensils';
+      break;
     default:
-      console.error('error')
-  }
-}))
+      return;
+  };
 
-// Filter select dropdown //
-const selectOptionsInput = document.querySelectorAll('.input')
-selectOptionsInput.forEach((input) => input.addEventListener('keyup', (e) => {
-  switch (e.target.id) {
-    case 'ingredients_input':
-      filterIngredients();
-      break
-    case 'appliance_input':
-      filterAppliance();
-      break
-    case 'ustensils_input':
-      filterUstensils();
-      break
-    default:
-      console.error('error');
-  }
-}))
+  const dropdown = document.getElementById(dropdownId);
+  dropdown.classList.toggle('show');
+  select.style.borderRadius = dropdown.classList.contains('show') ? '10px 10px 0 0' : '10px';
+};
 
-function filterIngredients() {
-  const input = document.getElementById('ingredients_input');
-  let filter = input.value.toUpperCase();
-  const ingredients = document.getElementById('ingredients');
-  let option = ingredients.getElementsByTagName('option');
+// Filter options on select dropdown //
+const selectOptionsInput = document.querySelectorAll('.input');
 
-  for (let i = 0; i < option.length; i++) {
-    let value = option[i].textContent || option[i].innerText;
-    if (value.toUpperCase().indexOf(filter) > -1) {
-      option[i].style.display = "";
+selectOptionsInput.forEach((input) => {
+  input.addEventListener('keyup', (event) => {
+    const inputId = event.target.id;
+    let dropdownId;
+
+    switch (inputId) {
+      case 'ingredients_input':
+        dropdownId = 'ingredients';
+        break;
+      case 'appliance_input':
+        dropdownId = 'appliance';
+        break;
+      case 'ustensils_input':
+        dropdownId = 'ustensils';
+        break;
+      default:
+        console.error('error');
+    };
+
+    filterOptions(inputId, dropdownId);
+  });
+});
+
+// Manage filter options  //
+function filterOptions(inputId, dropdownId) {
+  const input = document.getElementById(inputId);
+  const filter = input.value.toLowerCase();
+  const dropdown = document.getElementById(dropdownId);
+  const options = dropdown.getElementsByTagName('option');
+
+  // Filter the options and add event listeners to the visible ones
+  for (let i = 0; i < options.length; i++) {
+    const searchInput = options[i].textContent || options[i].innerText;
+
+    if (searchInput.toLowerCase().indexOf(filter) > -1) {
+      options[i].style.display = '';
+      dropdown.style.height = 'auto';
+
+      if (!options[i].getAttribute('data-eventlistener')) {
+        options[i].addEventListener("click", (event) => {
+          console.log("hello from optionInput")
+          const selectedOptionInput = event.target;
+          dropdown.classList.remove('show');
+          const dropdownPrevious = dropdown.previousElementSibling;
+          dropdownPrevious.style.borderRadius = dropdown.classList.contains('show') ? '10px 10px 0 0' : '10px';
+          input.value = '';
+
+          handleSelectSearch(selectedOptionInput.textContent, selectedOptionInput.closest('.dropdown_buttton'));
+        });
+
+        // On éviter de remettre l'eventListener à chaque tour de boucle
+        options[i].setAttribute('data-eventlistener', true);
+      }
     } else {
-      option[i].style.display = "none";
+      options[i].style.display = 'none';
+    };
+  };
+};
+
+// MANAGE SEARCHBAR SEARCH OPTIONS //
+// Define the array of available categories to search
+const categories = ['title', 'ingredients', 'description'];
+
+const inputElement = document.getElementById("search");
+const searchBtnElement = document.getElementById("search_button");
+const searchInstance = new Search(listOfRecipes, categories, inputElement);
+
+inputElement.addEventListener('keydown', (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+
+    if (inputElement.value.length < 3) {
+      alert('Veuillez saisir au moins 3 caractères.');
+      return;
     }
+    searchInstance.handleSearch();
+    updateSelectOptions();
   }
+});
+
+searchBtnElement.addEventListener('click', () => {
+  if (inputElement.value.length < 3) {
+    alert('Veuillez saisir au moins 3 caractères.');
+    return;
+  }
+
+  searchInstance.handleSearch();
+  updateSelectOptions();
+});
+
+// Update select options according to search results
+function updateSelectOptions() {
+  // Remove all existing options
+  const optionsDropdown = document.querySelectorAll('option');
+  optionsDropdown.forEach(option => option.remove());
+
+  // Get visible recipe cards
+  const visibleRecipeCards = Array.from(document.querySelectorAll('.recipe_card')).filter(card => {
+    const style = window.getComputedStyle(card);
+    return style.display !== 'none';
+  });
+
+  // Map visible recipe cards to recipe objects
+  const displayedRecipes = visibleRecipeCards.map(card => ({
+    id: card.getAttribute('data-id'),
+    name: card.getAttribute('data-name'),
+    description: card.getAttribute('data-description'),
+    ingredients: card.getAttribute('data-ingredients').split(','),
+    appliance: card.getAttribute('data-appliance'),
+    ustensils: card.getAttribute('data-ustensils').split(',')
+  }));
+
+  // Get new lists for select options
+  const listOfResultsIngredients = [...new Set(displayedRecipes.flatMap(recipe => recipe.ingredients))];
+  const listOfResultsAppliances = [...new Set(displayedRecipes.map(recipe => recipe.appliance))];
+  const listOfResultsUstensils = [...new Set(displayedRecipes.flatMap(recipe => recipe.ustensils))];
+
+  // Display new options
+  displaySelectOptions(listOfResultsIngredients, 'ingredients');
+  displaySelectOptions(listOfResultsAppliances, 'appliance');
+  displaySelectOptions(listOfResultsUstensils, 'ustensils');
 }
 
-function filterAppliance() {
-  const input = document.getElementById('appliance_input');
-  let filter = input.value.toUpperCase();
-  const appliance = document.getElementById('appliance');
-  let option = appliance.getElementsByTagName('option');
+// MANAGE SELECT SEARCH OPTIONS //
+function handleSelectSearch(selectedOption, selectId) {
+  const searchInput = document.getElementById('search');
+  searchInput.value = selectedOption;
 
-  for (let i = 0; i < option.length; i++) {
-    let value = option[i].textContent || option[i].innerText;
-    if (value.toUpperCase().indexOf(filter) > -1) {
-      option[i].style.display = "";
-    } else {
-      option[i].style.display = "none";
-    }
-  }
-}
+  // Define the array of available categories to search
+  const categories = ['title', 'ingredients', 'description'];
+  const searchInstance = new Search(listOfRecipes, categories, searchInput);
 
-function filterUstensils() {
-  const input = document.getElementById('ustensils_input');
-  let filter = input.value.toUpperCase();
-  const ustensils = document.getElementById('ustensils');
-  let option = ustensils.getElementsByTagName('option');
-
-  for (let i = 0; i < option.length; i++) {
-    let value = option[i].textContent || option[i].innerText;
-    if (value.toUpperCase().indexOf(filter) > -1) {
-      option[i].style.display = "";
-    } else {
-      option[i].style.display = "none";
-    }
-  }
+  searchInstance.handleSearch();
+  updateSelectOptions();
 }
