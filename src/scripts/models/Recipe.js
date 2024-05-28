@@ -78,7 +78,6 @@ export default class Recipe {
     // Create a "div" tag for recipe's ingredients
     const recipeIngredients = document.createElement('div')
     recipeIngredients.className = 'recipe_ingredients'
-    // recipeIngredients.textContent = this.setIngredients()
     ingredients.appendChild(recipeIngredients)
 
     let ingredientsList = this.ingredients
@@ -98,7 +97,7 @@ export default class Recipe {
         // Create a "li" tag for each quantity
         const quantity = document.createElement('li')
         quantity.className = 'text-stone-500'
-        quantity.textContent = (ingredientsList[i].quantity ? ingredientsList[i].quantity : "") + (ingredientsList[i].unit ? ingredientsList[i].unit : "")
+        quantity.textContent = (ingredientsList[i].quantity ? ingredientsList[i].quantity : "") + ' ' + (ingredientsList[i].unit ? ingredientsList[i].unit : "")
         list.appendChild(quantity)
       }
   }

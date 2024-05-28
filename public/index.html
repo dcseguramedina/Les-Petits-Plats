@@ -22,52 +22,55 @@
             </h1>
             <div class="search_input">
                 <input id="search" type="search" name="search" placeholder="Rechercher une recette, un ingrédient, ..." >
-                <img class="w-1/10 h-4/5" src="../src/assets/images/Loop.png" alt="">
+                <button id="search_button" type="button" name=""><img class="w-1/10 h-4/5" src="../src/assets/images/Loop.png" alt=""></button>
             </div>            
         </div>
     </header>
 
     <main>
-        <section class="flex flex-row justify-between">
-            <div class="select_container">
-                <div class="select_dropdown">
-                    <button id="ingredients_btn" class="dropdown_buttton">
-                        Ingrédients
-                        <span class="arrow">></span>
-                    </button>
-                    <div id="ingredients" class="dropdown_content">
-                        <div class="input_container">
-                            <input id="ingredients_input" class="input" type="text">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>                        
+        <section class="flex flex-col justify-between">
+            <div class="select_section">
+                <div class="select_container">
+                    <div class="select_dropdown">
+                        <button id="ingredients_btn" class="dropdown_buttton">
+                            Ingrédients
+                            <span class="arrow">></span>
+                        </button>
+                        <div id="ingredients" class="dropdown_content">
+                            <div class="input_container">
+                                <input id="ingredients_input" class="input" type="text">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>                        
+                        </div>
                     </div>
-                </div>
-                <div class="select_dropdown">
-                    <button id="appliance_btn" class="dropdown_buttton">
-                        Appareils
-                        <span class="arrow">></span>
-                    </button>
-                    <div id="appliance" class="dropdown_content">
-                        <div class="input_container">
-                            <input id="appliance_input" class="input" type="text">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                    <div class="select_dropdown">
+                        <button id="appliance_btn" class="dropdown_buttton">
+                            Appareils
+                            <span class="arrow">></span>
+                        </button>
+                        <div id="appliance" class="dropdown_content">
+                            <div class="input_container">
+                                <input id="appliance_input" class="input" type="text">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="select_dropdown">
+                        <button id="ustensils_btn" class="dropdown_buttton">
+                            Ustensiles
+                            <span class="arrow">></span>
+                        </button>
+                        <div id="ustensils" class="dropdown_content">
+                            <div class="input_container">
+                                <input id="ustensils_input" class="input" type="text">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="select_dropdown">
-                    <button id="ustensils_btn" class="dropdown_buttton">
-                        Ustensiles
-                        <span class="arrow">></span>
-                    </button>
-                    <div id="ustensils" class="dropdown_content">
-                        <div class="input_container">
-                            <input id="ustensils_input" class="input" type="text">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>
-                    </div>
-                </div>
+                <h2 id="recipes_number">1500 recettes</h2>
             </div>
-            <h2>1500 recettes</h2>
+            <div id="tag_section" class="mt-5"></div>
         </section>
 
         <section class="recipes_section">
