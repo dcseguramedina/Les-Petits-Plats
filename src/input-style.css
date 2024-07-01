@@ -312,3 +312,14 @@ input:-webkit-autofill:active {
     height: 135px;
     overflow: hidden;
 }
+
+.no-results-message {
+    height: fit-content;
+    margin: auto;
+    margin-top: 20px;
+    font-family: 'Manrope';
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 16.39px;
+    text-align: center;
+}
