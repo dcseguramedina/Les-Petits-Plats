@@ -18,8 +18,6 @@ export default class Recipe {
     const recipeCard = document.createElement('article')
     recipeCard.className = 'recipe_card'
     recipeCard.setAttribute('data-id', this.id)
-    recipeCard.setAttribute('data-name', this.name)
-    recipeCard.setAttribute('data-description', this.description)
     recipeCard.setAttribute('data-ingredients', this.ingredients.map((ingredient) => ingredient.ingredient))
     recipeCard.setAttribute('data-appliance', this.appliance)
     recipeCard.setAttribute('data-ustensils', this.ustensils)
@@ -43,7 +41,7 @@ export default class Recipe {
     image.alt = this.name
     recipeImage.appendChild(image)
 
-    // Create an "div" tag for each recipe's idetails
+    // Create an "div" tag for each recipe's details
     const recipeDetails = document.createElement('div')
     recipeDetails.className = 'recipe_details'
     recipeCard.appendChild(recipeDetails)
