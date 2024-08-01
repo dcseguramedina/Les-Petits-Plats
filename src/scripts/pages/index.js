@@ -5,7 +5,7 @@ import {
   listOfRecipeUstensils
 } from '../utils/lists.utils.js'
 import Recipe from '../models/Recipe.js'
-import SearchBar from '../models/SearchBar.js'
+import Search from '../models/Search.js'
 
 // DISPLAY HOME PAGE //
 function displayHomePage() {
@@ -140,14 +140,14 @@ function handleOptionClick(event) {
   const input = dropdown.querySelector('.input')
   input.value = ''
 
-//   handleSelectSearch(selectedOptionInput.textContent, dropdownPrevious.id)
+  handleSelectSearch(selectedOptionInput.textContent, dropdownPrevious.id)
 }
 
 // MANAGE SEARCHBAR SEARCH OPTIONS //
 const categories = ['title', 'ingredients', 'description']
 const inputElement = document.getElementById("search")
 const searchBtnElement = document.getElementById("search_button")
-const searchInstance = new SearchBar(listOfRecipes, categories, inputElement)
+const searchInstance = new Search(listOfRecipes, categories, inputElement)
 
 inputElement.addEventListener('keydown', event => {
   if (event.key === "Enter") {
@@ -164,7 +164,7 @@ function handleSearch() {
     return
   }
 
-  searchInstance.handleSearchBarSearch()
+  searchInstance.handleSearch()
   updateSelectOptions()
 }
 
@@ -194,12 +194,12 @@ function updateSelectOptions() {
   displaySelectOptions(listOfResultsUstensils, 'ustensils')
 }
 
-// // MANAGE SELECT SEARCH OPTIONS //
-// function handleSelectSearch(selectedOption, dropdownId) {
-//   const searchInput = document.getElementById('search')
-//   searchInput.value = selectedOption
+// MANAGE SELECT SEARCH OPTIONS //
+function handleSelectSearch(selectedOption, dropdownId) {
+  const searchInput = document.getElementById('search')
+  searchInput.value = selectedOption
 
-//   const searchInstance = new Search(listOfRecipes, categories, searchInput)
-//   searchInstance.handleSearch()
-//   updateSelectOptions()
-// }
+  const searchInstance = new Search(listOfRecipes, categories, searchInput)
+  searchInstance.handleSearch()
+  updateSelectOptions()
+}
