@@ -2,6 +2,8 @@ export default class Search {
   results = []
   searchHistory = []
 
+  isAdvancedSearch = false
+
   constructor(data, categories, input) {
     this.data = data
     this.categories = categories
@@ -22,8 +24,13 @@ export default class Search {
 
     // Search by category and push the results into the results array
     for (const category of this.categories) {
-      const matches = this.searchRecipes(lowercaseInput, category)
-      this.results = this.results.concat(matches)
+      if (isAdvancedSearch === false) {
+        const matches = this.searchRecipes(lowercaseInput, category)
+        this.results = this.results.concat(matches)
+      } else {
+        const matches = this.searchRecipes(lowercaseInput, category, true)
+        this.results = this.results.concat(matches)
+      }     
     }
 
     // Define an object with the search details
@@ -57,29 +64,43 @@ export default class Search {
     this.input.value = ''
   }
 
-  searchRecipes(lowercaseInput, category) {
-      // Filter the arrays to find matches
-      return this.data.filter((recipe) => {
-        switch (category) {
-          case 'title':
-            return recipe.name.toLowerCase().includes(lowercaseInput)
-          case 'ingredients':
-            return recipe.ingredients.some(ingredient =>
-              ingredient.ingredient.toLowerCase().includes(lowercaseInput)
-            );
-          case 'description':
-            return recipe.description.toLowerCase().includes(lowercaseInput)
-          case 'appliance':
-            return recipe.appliance.toLowerCase().includes(lowercaseInput)
-          case 'ustensils':
-            return recipe.ustensils.some(ustensil =>
-              ustensil.toLowerCase().includes(lowercaseInput)
-            );
-          default:
-            return
-        }
-      })
+  searchRecipes(lowercaseInput, category, isAdvancedSearch = false) {
+    let dataToFilter;
+  
+    if (!isAdvancedSearch) {
+      // Initial search on JSON data
+      dataToFilter = this.data;
+    } else {
+      // Advanced search on local storage data
+      const allResultArrays = this.searchHistory.map((item) => item.result);
+      const allResults = allResultArrays.flat();
+      dataToFilter = [...new Set(allResults.map(JSON.stringify))].map(JSON.parse);
     }
+  
+    console.log(dataToFilter)
+
+    // Filter the data based on the search criteria
+    return dataToFilter.filter((recipe) => {
+      switch (category) {
+        case 'title':
+          return recipe.name.toLowerCase().includes(lowercaseInput);
+        case 'ingredients':
+          return recipe.ingredients.some(ingredient =>
+            ingredient.ingredient.toLowerCase().includes(lowercaseInput)
+          );
+        case 'description':
+          return recipe.description.toLowerCase().includes(lowercaseInput);
+        case 'appliance':
+          return recipe.appliance.toLowerCase().includes(lowercaseInput);
+        case 'ustensils':
+          return recipe.ustensils.some(ustensil =>
+            ustensil.toLowerCase().includes(lowercaseInput)
+          );
+        default:
+          return false;
+      }
+    });
+  }
 
   // Save results to localStorage
   saveToLocalStorage() {
